@@ -683,18 +683,6 @@ export default function App() {
                   </p>
                 </form>
               )}
-
-              {!isRegisterMode && (
-                <div className="mt-8 pt-6 border-t border-gray-100">
-                  <p className="text-xs text-gray-500 font-medium mb-3 text-center uppercase tracking-wider">Info Akun Demo</p>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
-                    <div className="bg-gray-50 p-2 rounded"><b>Admin:</b> admin / 123</div>
-                    <div className="bg-gray-50 p-2 rounded"><b>Client:</b> client / 123</div>
-                    <div className="bg-gray-50 p-2 rounded"><b>Guru:</b> guru / 123</div>
-                    <div className="bg-gray-50 p-2 rounded"><b>Murid:</b> andi / 123</div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
