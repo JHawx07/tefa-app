@@ -13,15 +13,24 @@ import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }
 import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 
 // --- FIREBASE SETUP ---
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+const firebaseConfig = {
+  apiKey:"AIzaSyAXKw6X06_obIaeXTIKq8QCrPFBwK7EusU",
+  authDomain:"tefa-app-b0f65.firebaseapp.com",
+  projectId:"tefa-app-b0f65",
+  storageBucket:"tefa-app-b0f65.firebasestorage.app",
+  messagingSenderId:"191267580007",
+  appId:"1:191267580007:web:de2822430b3b2e19494cc2",
+  measurementId:"G-7N7Z6804FX"
+};
+
+// Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'tefa-app-default';
 
 // Utility untuk path koleksi publik
-const getColRef = (colName) => collection(db, 'artifacts', appId, 'public', 'data', colName);
-const getDocRef = (colName, docId) => doc(db, 'artifacts', appId, 'public', 'data', colName, docId);
+const getColRef = (colName) => collection(db, 'artifacts', firebaseConfig.appId, 'public', 'data', colName);
+const getDocRef = (colName, docId) => doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', colName, docId);
 
 
 // --- INITIAL SEED DATA (Akan otomatis dimasukkan ke DB jika kosong) ---
@@ -130,16 +139,16 @@ export default function App() {
 
   // --- FIREBASE EFFECTS ---
   // 1. Inisialisasi Auth
-  useEffect(() => {
+ useEffect(() => {
     const initAuth = async () => {
       try {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
+        // Langsung coba login anonim tanpa syarat lain
+        await signInAnonymously(auth);
+        console.log("Berhasil Login Anonim!");
       } catch (error) {
         console.error('Firebase Auth Error:', error);
+        // Jika gagal auth, set user manual agar tidak stuck di loading
+        setFbUser({ uid: 'guest-mode' }); 
       }
     };
     initAuth();
